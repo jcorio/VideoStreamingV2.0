@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTSP Camera Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">RTSP Camera Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="dashboardTab">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="snapshotsTab">Snapshots</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="settingsTab">Settings</a>
+                    </li>
+                </ul>
+                <span class="navbar-text" id="connectionStatus">
+                    Connecting...
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-3">
+        <!-- Dashboard View -->
+        <div id="dashboardView">
+            <div class="row" id="cameraGrid">
+                <!-- Camera feeds will be inserted here dynamically -->
+            </div>
+        </div>
+
+        <!-- Snapshots View -->
+        <div id="snapshotsView" class="d-none">
+            <h2>Snapshots</h2>
+            <div class="row" id="snapshotGrid"></div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="settingsView" class="d-none">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Camera Settings</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="cameraSettings">
+                                <!-- Camera settings will be inserted here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Template (hidden) -->
+    <template id="cameraTemplate">
+        <div class="col-lg-4 col-md-6 mb-4 camera-container">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="camera-name mb-0"></h5>
+                    <span class="badge camera-status">Connecting...</span>
+                </div>
+                <div class="card-body p-0 text-center">
+                    <div class="camera-frame-container">
+                        <img class="camera-frame img-fluid" src="" alt="Camera feed">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-sm snapshot-btn">Take Snapshot</button>
+                    <button class="btn btn-secondary btn-sm detection-toggle">
+                        <span class="detection-status">Detection: On</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Camera Settings Template (hidden) -->
+    <template id="cameraSettingsTemplate">
+        <div class="camera-setting mb-4">
+            <h6 class="camera-name"></h6>
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input detection-enabled" type="checkbox">
+                <label class="form-check-label">Object Detection</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confidence Threshold: <span class="confidence-value">0.5</span></label>
+                <input type="range" class="form-range confidence-threshold" min="0.1" max="0.9" step="0.1" value="0.5">
+            </div>
+            <hr>
+        </div>
+    </template>
+
+    <!-- Snapshot Template (hidden) -->
+    <template id="snapshotTemplate">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100">
+                <img class="card-img-top snapshot-img" src="" alt="Snapshot">
+                <div class="card-body">
+                    <h6 class="snapshot-name"></h6>
+                    <p class="snapshot-time"></p>
+                    <a href="#" class="btn btn-sm btn-primary snapshot-download">Download</a>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html> 

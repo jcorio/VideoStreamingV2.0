@@ -1,0 +1,104 @@
+/* Main styles for RTSP Camera Dashboard */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.camera-container {
+    transition: all 0.3s ease;
+}
+
+.camera-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.camera-frame-container {
+    position: relative;
+    background-color: #000;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-frame {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.camera-status {
+    background-color: #6c757d;
+    color: white;
+}
+
+.camera-status.connected {
+    background-color: #28a745;
+}
+
+.camera-status.disconnected {
+    background-color: #dc3545;
+}
+
+.card-header {
+    background-color: #343a40;
+    color: white;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Snapshots view */
+.snapshot-img {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .camera-container {
+        margin-bottom: 20px;
+    }
+    
+    .camera-frame-container {
+        aspect-ratio: 16/9;
+    }
+}
+
+/* Loading indicator */
+.loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Settings styles */
+.form-range {
+    cursor: pointer;
+}
+
+.camera-setting {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.camera-setting:last-child {
+    border-bottom: none;
+}
+
+/* Tab navigation active state */
+.nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+} 
