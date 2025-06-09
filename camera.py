@@ -54,8 +54,9 @@ class Camera:
             return False
             
     def load_detection_model(self):
-        """Load YOLOv8 detection model"""
+        """Load YOLOv8 detection model using the Ultralytics API"""
         try:
+            # Use the Ultralytics YOLO API for model loading (handles torch.load internally)
             self.detection_model = YOLO(DETECTION_SETTINGS["yolo_model"])
             return True
         except Exception as e:
